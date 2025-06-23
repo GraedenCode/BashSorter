@@ -1,11 +1,16 @@
 #!/bin/bash
 
 echo "Input Directory Path: "
+mkdir -p "logs/"
+LOGFILE="logs/sort_$(date +"%Y%m%d_%H%M").log"
+exec > >(tee -a "$LOGFILE") 2>&1
 read -r FOLDER
+echo "======================"
 echo "Accessing $FOLDER ..."
 
 if [[ -d "$FOLDER" ]]; then
 	echo "$FOLDER was Found"
+	echo "======================"
 	cd "$FOLDER" || exit
 	mkdir -p "images"
 	mkdir -p "documents"
@@ -33,11 +38,16 @@ if [[ -d "$FOLDER" ]]; then
 
 	REMAINING=$(($FILETOTAL - $IMGTOTAL - $DOCTOTAL))
 
-	echo "$FILETOTAL Files Accessed. $IMGTOTAL images moved. $DOCTOTAL documents moved."
-	echo "$REMAINING Remaining"
-	
+	echo "**************************************************"
+	echo "$IMGTOTAL images moved. $DOCTOTAL documents moved."
+	echo "$FILETOTAL Files Accessed. $REMAINING Remaining. "
+        echo "$(date)"
+	echo "**************************************************"
+
 else
 	echo "Could not Locate $FOLDER"
+	echo "======================"
+
 	exit 1
 fi
 
