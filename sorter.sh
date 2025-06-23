@@ -1,10 +1,11 @@
 #!/bin/bash
 
-echo "Input Directory Path: "
+#echo "Input Directory Path: "
 mkdir -p "logs/"
 LOGFILE="logs/sort_$(date +"%Y%m%d_%H%M").log"
 exec > >(tee -a "$LOGFILE") 2>&1
-read -r FOLDER
+#read -r FOLDER
+FOLDER="${1:-/home/graeden/Desktop/ProjectRonin/BashSorter/test_data"
 echo "======================"
 echo "Accessing $FOLDER ..."
 
